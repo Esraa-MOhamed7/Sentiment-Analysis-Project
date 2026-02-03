@@ -1,4 +1,4 @@
-# 📄 Sentiment Analysis Project
+# 📜 Sentiment Analysis Project
 
 ## Overview
 This project demonstrates the complete workflow of building and deploying a **Sentiment Analysis system**.  
