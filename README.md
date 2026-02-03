@@ -72,10 +72,6 @@ The app allows users to input product reviews and instantly see whether the sent
       - Input text box for reviews.
       - Button to analyze sentiment.
       - Display of results (Positive/Negative).
-      - Confidence score progress bar.
-      - Prediction history with emojis.
-      - Gradient banner, sidebar info, and footer credits.
-
 ---
 
 ## Features
