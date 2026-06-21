@@ -1,92 +1,89 @@
-# 📝 Sentiment Analysis Project
+# 💬 Sentiment Analysis — ML Model + Automated Workflow
 
-## Overview
-This project demonstrates the complete workflow of building and deploying a **Sentiment Analysis system**.  
-We started from raw data in a notebook, trained both baseline ML and deep learning models (using PyTorch), and then deployed the final model in a **Streamlit web application** with a modern, attractive UI.  
-The app allows users to input product reviews and instantly see whether the sentiment is **Positive** or **Negative**, along with a confidence score and prediction history.
+> What if your model didn't just predict — but actually responded?
 
----
-
-## Project Steps 
-
-1. **Setup Project**
-   - Imported necessary libraries.
-   - Loaded the Amazon Reviews dataset (`train.ft.txt.bz2` and `test.ft.txt.bz2`).
-   - Each line contained a label (`__label__1` = negative, `__label__2` = positive) followed by review text.
-
-2. **Data Loading**
-   - Loaded data into pandas DataFrames.
-   - Converted labels into numerical format (0 = negative, 1 = positive).
-   - Inspected samples to understand structure.
-
-3. **Text Preprocessing**
-   - Lowercased all text.
-   - Removed punctuation and special characters.
-   - Tokenized words.
-   - Optionally removed stopwords.
-   - Ensured consistency and reduced noise.
-
-4. **Feature Extraction**
-   - Applied **TF-IDF Vectorization** to convert text into numerical features.
-   - Captured word importance across the dataset.
-
-5. **Baseline ML Model**
-   - Trained a **Logistic Regression classifier**.
-   - Established baseline accuracy for comparison with deep learning models.
-
-6. **Deep Learning with PyTorch**
-   - Converted reviews into fixed-length sequences of word indices.
-   - Mapped unknown words to `<unk>` and applied `<pad>` for padding.
-   - Converted labels into tensors (0 = negative, 1 = positive).
-   - Implemented a custom `Dataset` class and `DataLoader` for batching.
-
-7. **LSTM Model**
-   - Defined an LSTM-based sentiment classifier:
-     - Embedding layer → converts word indices into dense vectors.
-     - LSTM → captures sequence context.
-     - Fully connected layer → outputs probability of positive sentiment.
-
-8. **Training Loop with Validation, Early Stopping, and Scheduler**
-   - Tracked training and validation accuracy each epoch.
-   - Used **early stopping** to prevent overfitting.
-   - Applied a **learning rate scheduler** to reduce LR when validation accuracy plateaued.
-
-9. **Evaluation**
-   - Evaluated trained model on the test set.
-   - Computed accuracy and compared with baseline Logistic Regression.
-
-10. **Saving the Trained Model**
-    - Saved trained PyTorch model and vectorizer with `joblib`.
-    - Ensured reusability without retraining.
-
-11. **Loading the Saved Model**
-    - Tested loading the model and vectorizer.
-    - Verified predictions on new text samples.
-
-12. **Prediction Function**
-    - Built a function to predict sentiment for new text inputs.
-    - Returned both sentiment label and confidence score.
-
-13. **Web App Deployment (Streamlit)**
-    - Created `app.py` with:
-      - Input text box for reviews.
-      - Button to analyze sentiment.
-      - Display of results (Positive/Negative).
----
-
-## Features
-- End-to-end workflow: **Notebook → PyTorch Model → Web App**  
-- Baseline ML model (Logistic Regression) + Deep Learning (LSTM with PyTorch)  
-- Confidence progress bar for prediction strength  
-- Emoji-enhanced results and history   
+This project connects a custom-trained **Sentiment Analysis model** with an **automated n8n workflow** that handles the business logic: thanking happy customers, apologizing to unhappy ones, and alerting the manager — all without manual intervention.
 
 ---
 
-## Installation & Usage
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/sentiment-analysis-project.git
-   cd sentiment-analysis-project
+## How It Works
 
-2. pip install -r requirements.txt
-3. streamlit run app.py
+### The Workflow (n8n)
+
+1. User submits a review via a **form**
+2. The model classifies it as **Positive** or **Negative**
+3. Result + data get logged in **Google Sheets** with timestamp
+4. **If Positive** → automatic thank-you message sent to the user
+5. **If Negative** → automatic apology sent + **Alert fired to the Manager**
+
+Two scenarios are demonstrated in the video: a positive case and a negative case.
+
+---
+
+## The Model
+
+Built and trained from scratch using **PyTorch**:
+
+| Component | Detail |
+|---|---|
+| Baseline | Logistic Regression |
+| Deep Learning Model | LSTM (PyTorch) |
+| Output | Sentiment label + confidence score |
+| Saved With | `joblib` (model + vectorizer) |
+
+### Training Pipeline
+
+- Trained and evaluated on a labeled reviews dataset
+- Compared LSTM accuracy against Logistic Regression baseline
+- Saved model and vectorizer for reuse without retraining
+- Built a prediction function returning both label and confidence score
+
+---
+
+##  Web App (Streamlit)
+
+A lightweight interface to test the model directly:
+
+- Text input for any review
+- Analyze button → returns Positive / Negative
+- Confidence progress bar
+- Emoji-enhanced results
+- Prediction history within the session
+
+### Run Locally
+
+```bash
+git clone https://github.com/Esraa-MOhamed7/Sentiment-Analysis-Project.git
+cd Sentiment-Analysis-Project
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+---
+
+## Tech Stack
+
+| Layer | Tool |
+|---|---|
+| Model Training | PyTorch (LSTM) |
+| Baseline | Scikit-learn (Logistic Regression) |
+| Serialization | joblib |
+| Web App | Streamlit |
+| Workflow Automation | n8n |
+| Data Logging | Google Sheets |
+| Alerts | Manager notification via n8n |
+
+---
+
+## 🔗 Links
+
+- [Code & Workflow](https://github.com/Esraa-MOhamed7/Sentiment-Analysis-Project)
+- [Kaggle Notebook](https://www.kaggle.com/code/esraamoh7med/from-reviews-to-predictions-sentiment-analysis)
+
+---
+
+## 🙏Note
+
+This project was an experiment in connecting Machine Learning with Automation and real Business Logic — where the model's output doesn't just sit in a notebook, but actually triggers meaningful actions.
+
+Feedback and suggestions are always welcome!
